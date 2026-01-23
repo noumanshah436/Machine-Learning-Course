@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K-Means Clustering - Complete Exam Guide</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      header p {
+        font-size: 1.1em;
+        opacity: 0.95;
+      }
+
+      .content {
+        padding: 40px;
+      }
+
+      .section {
+        margin-bottom: 40px;
+      }
+
+      h2 {
+        color: #667eea;
+        font-size: 2em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #667eea;
+      }
+
+      h3 {
+        color: #764ba2;
+        font-size: 1.5em;
+        margin: 25px 0 15px 0;
+      }
+
+      h4 {
+        color: #555;
+        font-size: 1.2em;
+        margin: 20px 0 10px 0;
+      }
+
+      .formula {
+        background: #f8f9fa;
+        border-left: 4px solid #667eea;
+        padding: 15px 20px;
+        margin: 20px 0;
+        font-family: "Courier New", monospace;
+        border-radius: 5px;
+      }
+
+      .highlight-box {
+        background: #e3f2fd;
+        border: 2px solid #2196f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .warning-box {
+        background: #fff3e0;
+        border: 2px solid #ff9800;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .success-box {
+        background: #e8f5e9;
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      tr:hover {
+        background-color: #e3f2fd;
+      }
+
+      .step {
+        background: white;
+        border: 2px solid #667eea;
+        border-radius: 10px;
+        padding: 25px;
+        margin: 25px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .step-number {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-right: 15px;
+      }
+
+      .calculation {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        overflow-x: auto;
+      }
+
+      ul,
+      ol {
+        margin: 15px 0 15px 30px;
+      }
+
+      li {
+        margin: 10px 0;
+      }
+
+      .key-point {
+        background: #fff9c4;
+        padding: 10px 15px;
+        border-left: 4px solid #fbc02d;
+        margin: 15px 0;
+        border-radius: 5px;
+      }
+
+      code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+        color: #d32f2f;
+      }
+
+      .grid-visualization {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .cluster-card {
+        background: white;
+        border: 2px solid #667eea;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+      }
+
+      .iteration-header {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 30px 0 20px 0;
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      @media print {
+        body {
+          background: white;
+        }
+
+        .container {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📊 K-Means Clustering Algorithm</h1>
+        <p>Complete Study Guide with Solved Numerical Example</p>
+      </header>
+
+      <div class="content">
+        <!-- SECTION 1: WHAT IS K-MEANS -->
+        <div class="section">
+          <h2>1. What is K-Means Clustering?</h2>
+
+          <p>
+            <strong>K-Means</strong> is an unsupervised machine learning
+            algorithm used for clustering data into K distinct groups
+            (clusters). It partitions a dataset into K clusters where each data
+            point belongs to the cluster with the nearest centroid.
+          </p>
+
+          <div class="highlight-box">
+            <h4>🎯 Key Characteristics:</h4>
+            <ul>
+              <li>
+                <strong>Unsupervised Learning:</strong> No labeled data required
+              </li>
+              <li>
+                <strong>Partitioning Method:</strong> Divides data into
+                non-overlapping groups
+              </li>
+              <li>
+                <strong>Distance-Based:</strong> Uses distance metrics
+                (typically Euclidean)
+              </li>
+              <li>
+                <strong>Iterative:</strong> Refines clusters through multiple
+                iterations
+              </li>
+              <li>
+                <strong>K is Predefined:</strong> Number of clusters must be
+                specified beforehand
+              </li>
+            </ul>
+          </div>
+
+          <h3>Mathematical Foundation</h3>
+
+          <div class="formula">
+            <strong
+              >Objective Function (Minimize Within-Cluster Sum of Squares -
+              WCSS):</strong
+            ><br /><br />
+            J = Σ(i=1 to K) Σ(x∈Ci) ||x - μi||²
+            <br /><br />
+            Where:<br />
+            • K = number of clusters<br />
+            • Ci = i-th cluster<br />
+            • x = data point in cluster Ci<br />
+            • μi = centroid of cluster Ci<br />
+            • ||x - μi||² = squared Euclidean distance
+          </div>
+
+          <div class="formula">
+            <strong>Euclidean Distance Formula (2D):</strong><br /><br />
+            d(p, q) = √[(x₂ - x₁)² + (y₂ - y₁)²]
+            <br /><br />
+            <strong>Euclidean Distance Formula (n-dimensional):</strong
+            ><br /><br />
+            d(p, q) = √[Σ(i=1 to n)(qi - pi)²]
+          </div>
+
+          <div class="formula">
+            <strong>Centroid Calculation:</strong><br /><br />
+            μi = (1/|Ci|) Σ(x∈Ci) x
+            <br /><br />
+            For 2D points: μ = (mean of x-coordinates, mean of y-coordinates)
+          </div>
+
+          <h3>How K-Means Works - Algorithm Steps</h3>
+
+          <div class="step">
+            <span class="step-number">1</span>
+            <strong>Initialization:</strong> Randomly select K data points as
+            initial centroids (or use other initialization methods like
+            K-Means++)
+          </div>
+
+          <div class="step">
+            <span class="step-number">2</span>
+            <strong>Assignment Step:</strong> Assign each data point to the
+            nearest centroid based on Euclidean distance
+          </div>
+
+          <div class="step">
+            <span class="step-number">3</span>
+            <strong>Update Step:</strong> Recalculate centroids as the mean of
+            all points assigned to each cluster
+          </div>
+
+          <div class="step">
+            <span class="step-number">4</span>
+            <strong>Convergence Check:</strong> Repeat steps 2-3 until centroids
+            no longer change (or changes are below a threshold) or maximum
+            iterations reached
+          </div>
+
+          <div class="warning-box">
+            <h4>⚠️ Important Notes:</h4>
+            <ul>
+              <li>K-Means is sensitive to initial centroid selection</li>
+              <li>May converge to local optima instead of global optima</li>
+              <li>Assumes clusters are spherical and roughly equal-sized</li>
+              <li>Sensitive to outliers</li>
+              <li>
+                Requires features to be on similar scales (normalization
+                recommended)
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 2: REAL-WORLD PROBLEM -->
+        <div class="section">
+          <h2>2. Real-World Problem: Customer Segmentation</h2>
+
+          <div class="highlight-box">
+            <h3>📱 Problem Statement</h3>
+            <p>
+              A retail company wants to segment its customers based on their
+              <strong>Annual Income (in $1000s)</strong> and
+              <strong>Spending Score (1-100)</strong> to create targeted
+              marketing campaigns. Use K-Means clustering to group customers
+              into K=2 clusters.
+            </p>
+          </div>
+
+          <h3>Given Dataset</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Annual Income ($1000s)</th>
+                <th>Spending Score</th>
+                <th>Point Notation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>C1</td>
+                <td>15</td>
+                <td>39</td>
+                <td>(15, 39)</td>
+              </tr>
+              <tr>
+                <td>C2</td>
+                <td>16</td>
+                <td>81</td>
+                <td>(16, 81)</td>
+              </tr>
+              <tr>
+                <td>C3</td>
+                <td>17</td>
+                <td>6</td>
+                <td>(17, 6)</td>
+              </tr>
+              <tr>
+                <td>C4</td>
+                <td>18</td>
+                <td>77</td>
+                <td>(18, 77)</td>
+              </tr>
+              <tr>
+                <td>C5</td>
+                <td>19</td>
+                <td>40</td>
+                <td>(19, 40)</td>
+              </tr>
+              <tr>
+                <td>C6</td>
+                <td>20</td>
+                <td>76</td>
+                <td>(20, 76)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="key-point">
+            <strong>🎯 Task:</strong> Apply K-Means algorithm with K=2 clusters.
+            Use C1(15, 39) and C2(16, 81) as initial centroids.
+          </div>
+        </div>
+
+        <!-- SECTION 3: STEP-BY-STEP SOLUTION -->
+        <div class="section">
+          <h2>3. Complete Step-by-Step Solution</h2>
+
+          <div class="iteration-header">🔄 ITERATION 1</div>
+
+          <h3>Step 1: Initialize Centroids</h3>
+          <div class="success-box">
+            <p><strong>Initial Centroids (given):</strong></p>
+            <ul>
+              <li><strong>Centroid 1 (μ₁):</strong> C1 = (15, 39)</li>
+              <li><strong>Centroid 2 (μ₂):</strong> C2 = (16, 81)</li>
+            </ul>
+          </div>
+
+          <h3>Step 2: Calculate Distances from Each Point to All Centroids</h3>
+
+          <h4>Distance Calculation for C1 = (15, 39)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(15-15)² + (39-39)²] = √[0 + 0] =
+            <strong>0.00</strong> Distance to μ₂ = √[(15-16)² + (39-81)²] = √[1
+            + 1764] = √1765 = <strong>42.01</strong>
+            <strong>→ C1 assigned to Cluster 1</strong> (minimum distance)
+          </div>
+
+          <h4>Distance Calculation for C2 = (16, 81)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(16-15)² + (81-39)²] = √[1 + 1764] = √1765 =
+            <strong>42.01</strong> Distance to μ₂ = √[(16-16)² + (81-81)²] = √[0
+            + 0] = <strong>0.00</strong>
+            <strong>→ C2 assigned to Cluster 2</strong> (minimum distance)
+          </div>
+
+          <h4>Distance Calculation for C3 = (17, 6)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(17-15)² + (6-39)²] = √[4 + 1089] = √1093 =
+            <strong>33.06</strong> Distance to μ₂ = √[(17-16)² + (6-81)²] = √[1
+            + 5625] = √5626 = <strong>75.01</strong>
+            <strong>→ C3 assigned to Cluster 1</strong> (minimum distance: 33.06
+            < 75.01)
+          </div>
+
+          <h4>Distance Calculation for C4 = (18, 77)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(18-15)² + (77-39)²] = √[9 + 1444] = √1453 =
+            <strong>38.12</strong> Distance to μ₂ = √[(18-16)² + (77-81)²] = √[4
+            + 16] = √20 = <strong>4.47</strong>
+            <strong>→ C4 assigned to Cluster 2</strong> (minimum distance: 4.47
+            < 38.12)
+          </div>
+
+          <h4>Distance Calculation for C5 = (19, 40)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(19-15)² + (40-39)²] = √[16 + 1] = √17 =
+            <strong>4.12</strong> Distance to μ₂ = √[(19-16)² + (40-81)²] = √[9
+            + 1681] = √1690 = <strong>41.11</strong>
+            <strong>→ C5 assigned to Cluster 1</strong> (minimum distance: 4.12
+            < 41.11)
+          </div>
+
+          <h4>Distance Calculation for C6 = (20, 76)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(20-15)² + (76-39)²] = √[25 + 1369] = √1394 =
+            <strong>37.34</strong> Distance to μ₂ = √[(20-16)² + (76-81)²] =
+            √[16 + 25] = √41 = <strong>6.40</strong>
+            <strong>→ C6 assigned to Cluster 2</strong> (minimum distance: 6.40
+            < 37.34)
+          </div>
+
+          <h3>Step 3: Cluster Assignments After Iteration 1</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Point</th>
+                <th>Distance to μ₁</th>
+                <th>Distance to μ₂</th>
+                <th>Assigned Cluster</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>C1</td>
+                <td>(15, 39)</td>
+                <td>0.00</td>
+                <td>42.01</td>
+                <td><strong>Cluster 1</strong></td>
+              </tr>
+              <tr>
+                <td>C2</td>
+                <td>(16, 81)</td>
+                <td>42.01</td>
+                <td>0.00</td>
+                <td><strong>Cluster 2</strong></td>
+              </tr>
+              <tr>
+                <td>C3</td>
+                <td>(17, 6)</td>
+                <td>33.06</td>
+                <td>75.01</td>
+                <td><strong>Cluster 1</strong></td>
+              </tr>
+              <tr>
+                <td>C4</td>
+                <td>(18, 77)</td>
+                <td>38.12</td>
+                <td>4.47</td>
+                <td><strong>Cluster 2</strong></td>
+              </tr>
+              <tr>
+                <td>C5</td>
+                <td>(19, 40)</td>
+                <td>4.12</td>
+                <td>41.11</td>
+                <td><strong>Cluster 1</strong></td>
+              </tr>
+              <tr>
+                <td>C6</td>
+                <td>(20, 76)</td>
+                <td>37.34</td>
+                <td>6.40</td>
+                <td><strong>Cluster 2</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="success-box">
+            <p><strong>Clusters after Iteration 1:</strong></p>
+            <ul>
+              <li>
+                <strong>Cluster 1:</strong> C1(15,39), C3(17,6), C5(19,40)
+              </li>
+              <li>
+                <strong>Cluster 2:</strong> C2(16,81), C4(18,77), C6(20,76)
+              </li>
+            </ul>
+          </div>
+
+          <h3>Step 4: Recalculate Centroids</h3>
+
+          <h4>New Centroid for Cluster 1 (μ₁)</h4>
+          <div class="calculation">
+            <strong>Cluster 1 points:</strong> (15,39), (17,6), (19,40)
+
+            <strong>X-coordinate of μ₁:</strong>
+            μ₁ₓ = (15 + 17 + 19) / 3 = 51 / 3 = <strong>17.00</strong>
+
+            <strong>Y-coordinate of μ₁:</strong>
+            μ₁ᵧ = (39 + 6 + 40) / 3 = 85 / 3 = <strong>28.33</strong>
+
+            <strong>New Centroid μ₁ = (17.00, 28.33)</strong>
+          </div>
+
+          <h4>New Centroid for Cluster 2 (μ₂)</h4>
+          <div class="calculation">
+            <strong>Cluster 2 points:</strong> (16,81), (18,77), (20,76)
+
+            <strong>X-coordinate of μ₂:</strong>
+            μ₂ₓ = (16 + 18 + 20) / 3 = 54 / 3 = <strong>18.00</strong>
+
+            <strong>Y-coordinate of μ₂:</strong>
+            μ₂ᵧ = (81 + 77 + 76) / 3 = 234 / 3 = <strong>78.00</strong>
+
+            <strong>New Centroid μ₂ = (18.00, 78.00)</strong>
+          </div>
+
+          <div class="highlight-box">
+            <p><strong>Updated Centroids:</strong></p>
+            <ul>
+              <li>
+                <strong>μ₁:</strong> (15, 39) → <strong>(17.00, 28.33)</strong>
+              </li>
+              <li>
+                <strong>μ₂:</strong> (16, 81) → <strong>(18.00, 78.00)</strong>
+              </li>
+            </ul>
+            <p>
+              <strong>Centroids have changed! → Continue to Iteration 2</strong>
+            </p>
+          </div>
+
+          <div class="iteration-header">🔄 ITERATION 2</div>
+
+          <h3>Step 5: Recalculate Distances with New Centroids</h3>
+          <p>Using μ₁ = (17.00, 28.33) and μ₂ = (18.00, 78.00)</p>
+
+          <h4>Distance Calculation for C1 = (15, 39)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(15-17)² + (39-28.33)²] = √[4 + 113.78] = √117.78
+            = <strong>10.85</strong> Distance to μ₂ = √[(15-18)² + (39-78)²] =
+            √[9 + 1521] = √1530 = <strong>39.12</strong>
+            <strong>→ C1 assigned to Cluster 1</strong>
+          </div>
+
+          <h4>Distance Calculation for C2 = (16, 81)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(16-17)² + (81-28.33)²] = √[1 + 2773.78] =
+            √2774.78 = <strong>52.68</strong> Distance to μ₂ = √[(16-18)² +
+            (81-78)²] = √[4 + 9] = √13 = <strong>3.61</strong>
+            <strong>→ C2 assigned to Cluster 2</strong>
+          </div>
+
+          <h4>Distance Calculation for C3 = (17, 6)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(17-17)² + (6-28.33)²] = √[0 + 498.44] = √498.44
+            = <strong>22.33</strong> Distance to μ₂ = √[(17-18)² + (6-78)²] =
+            √[1 + 5184] = √5185 = <strong>72.01</strong>
+            <strong>→ C3 assigned to Cluster 1</strong>
+          </div>
+
+          <h4>Distance Calculation for C4 = (18, 77)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(18-17)² + (77-28.33)²] = √[1 + 2368.44] =
+            √2369.44 = <strong>48.68</strong> Distance to μ₂ = √[(18-18)² +
+            (77-78)²] = √[0 + 1] = √1 = <strong>1.00</strong>
+            <strong>→ C4 assigned to Cluster 2</strong>
+          </div>
+
+          <h4>Distance Calculation for C5 = (19, 40)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(19-17)² + (40-28.33)²] = √[4 + 136.11] = √140.11
+            = <strong>11.84</strong> Distance to μ₂ = √[(19-18)² + (40-78)²] =
+            √[1 + 1444] = √1445 = <strong>38.01</strong>
+            <strong>→ C5 assigned to Cluster 1</strong>
+          </div>
+
+          <h4>Distance Calculation for C6 = (20, 76)</h4>
+          <div class="calculation">
+            Distance to μ₁ = √[(20-17)² + (76-28.33)²] = √[9 + 2271.78] =
+            √2280.78 = <strong>47.76</strong> Distance to μ₂ = √[(20-18)² +
+            (76-78)²] = √[4 + 4] = √8 = <strong>2.83</strong>
+            <strong>→ C6 assigned to Cluster 2</strong>
+          </div>
+
+          <h3>Step 6: Cluster Assignments After Iteration 2</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Point</th>
+                <th>Distance to μ₁</th>
+                <th>Distance to μ₂</th>
+                <th>Assigned Cluster</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>C1</td>
+                <td>(15, 39)</td>
+                <td>10.85</td>
+                <td>39.12</td>
+                <td><strong>Cluster 1</strong></td>
+              </tr>
+              <tr>
+                <td>C2</td>
+                <td>(16, 81)</td>
+                <td>52.68</td>
+                <td>3.61</td>
+                <td><strong>Cluster 2</strong></td>
+              </tr>
+              <tr>
+                <td>C3</td>
+                <td>(17, 6)</td>
+                <td>22.33</td>
+                <td>72.01</td>
+                <td><strong>Cluster 1</strong></td>
+              </tr>
+              <tr>
+                <td>C4</td>
+                <td>(18, 77)</td>
+                <td>48.68</td>
+                <td>1.00</td>
+                <td><strong>Cluster 2</strong></td>
+              </tr>
+              <tr>
+                <td>C5</td>
+                <td>(19, 40)</td>
+                <td>11.84</td>
+                <td>38.01</td>
+                <td><strong>Cluster 1</strong></td>
+              </tr>
+              <tr>
+                <td>C6</td>
+                <td>(20, 76)</td>
+                <td>47.76</td>
+                <td>2.83</td>
+                <td><strong>Cluster 2</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="success-box">
+            <p><strong>Clusters after Iteration 2:</strong></p>
+            <ul>
+              <li>
+                <strong>Cluster 1:</strong> C1(15,39), C3(17,6), C5(19,40)
+              </li>
+              <li>
+                <strong>Cluster 2:</strong> C2(16,81), C4(18,77), C6(20,76)
+              </li>
+            </ul>
+            <p>
+              <strong>⚠️ Cluster assignments are SAME as Iteration 1!</strong>
+            </p>
+          </div>
+
+          <h3>Step 7: Check for Convergence</h3>
+          <div class="highlight-box">
+            <p><strong>Comparison:</strong></p>
+            <ul>
+              <li>
+                <strong>Iteration 1 Clusters:</strong> {C1,C3,C5} and {C2,C4,C6}
+              </li>
+              <li>
+                <strong>Iteration 2 Clusters:</strong> {C1,C3,C5} and {C2,C4,C6}
+              </li>
+            </ul>
+            <p style="font-size: 1.2em; margin-top: 15px">
+              <strong>✅ Cluster assignments are identical!</strong>
+            </p>
+            <p style="font-size: 1.2em">
+              <strong>✅ Algorithm has CONVERGED!</strong>
+            </p>
+          </div>
+
+          <div class="warning-box">
+            <h4>📝 Note on Convergence:</h4>
+            <p>We could also calculate the new centroids for verification:</p>
+            <ul>
+              <li>μ₁ would still be (17.00, 28.33)</li>
+              <li>μ₂ would still be (18.00, 78.00)</li>
+            </ul>
+            <p>
+              Since cluster assignments haven't changed, centroids remain the
+              same. The algorithm stops here.
+            </p>
+          </div>
+        </div>
+
+        <!-- SECTION 4: FINAL RESULTS -->
+        <div class="section">
+          <h2>4. Final Results & Interpretation</h2>
+
+          <div class="success-box">
+            <h3>🎯 Final Cluster Configuration</h3>
+
+            <h4>Cluster 1 - "Low-to-Moderate Spenders"</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Annual Income</th>
+                  <th>Spending Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>C1</td>
+                  <td>$15,000</td>
+                  <td>39</td>
+                </tr>
+                <tr>
+                  <td>C3</td>
+                  <td>$17,000</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td>C5</td>
+                  <td>$19,000</td>
+                  <td>40</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Centroid:</strong> (17.00, 28.33)</p>
+            <p>
+              <strong>Characteristics:</strong> Lower to moderate spending
+              scores (average 28.33), low-income segment
+            </p>
+
+            <h4>Cluster 2 - "High Spenders"</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Annual Income</th>
+                  <th>Spending Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>C2</td>
+                  <td>$16,000</td>
+                  <td>81</td>
+                </tr>
+                <tr>
+                  <td>C4</td>
+                  <td>$18,000</td>
+                  <td>77</td>
+                </tr>
+                <tr>
+                  <td>C6</td>
+                  <td>$20,000</td>
+                  <td>76</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Centroid:</strong> (18.00, 78.00)</p>
+            <p>
+              <strong>Characteristics:</strong> High spending scores (average
+              78.00), similar income range but much higher spending behavior
+            </p>
+          </div>
+
+          <h3>Business Insights & Marketing Strategy</h3>
+
+          <div class="highlight-box">
+            <h4>📊 Cluster 1: Budget-Conscious Segment</h4>
+            <ul>
+              <li>
+                <strong>Strategy:</strong> Value-oriented promotions, discount
+                offers, loyalty programs
+              </li>
+              <li>
+                <strong>Products:</strong> Essential items, budget-friendly
+                alternatives, bulk deals
+              </li>
+              <li>
+                <strong>Communication:</strong> Emphasize savings, value for
+                money, practical benefits
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h4>💎 Cluster 2: Premium Segment</h4>
+            <ul>
+              <li>
+                <strong>Strategy:</strong> Premium offerings, exclusive
+                memberships, personalized services
+              </li>
+              <li>
+                <strong>Products:</strong> High-end items, new launches, premium
+                experiences
+              </li>
+              <li>
+                <strong>Communication:</strong> Quality, exclusivity, status,
+                lifestyle enhancement
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 5: KEY FORMULAS -->
+        <div class="section">
+          <h2>5. Key Formulas Summary for Exam</h2>
+
+          <div class="formula">
+            <strong>1. Euclidean Distance (2D):</strong><br />
+            d = √[(x₂-x₁)² + (y₂-y₁)²]
+          </div>
+
+          <div class="formula">
+            <strong>2. Euclidean Distance (n-dimensions):</strong><br />
+            d = √[Σ(qi-pi)²] for i=1 to n
+          </div>
+
+          <div class="formula">
+            <strong>3. Centroid Calculation (2D):</strong><br />
+            μ = (Σxi/n, Σyi/n)<br />
+            Where n = number of points in cluster
+          </div>
+
+          <div class="formula">
+            <strong>4. Within-Cluster Sum of Squares (WCSS):</strong><br />
+            WCSS = Σ(all clusters) Σ(points in cluster) distance²(point,
+            centroid)
+          </div>
+
+          <div class="key-point">
+            <strong>💡 Pro Tip:</strong> Always calculate distances to ALL
+            centroids for each point, then assign to the cluster with minimum
+            distance. Show your work clearly step-by-step!
+          </div>
+        </div>
+
+        <!-- SECTION 6: COMMON EXAM TIPS -->
+        <div class="section">
+          <h2>6. Exam Tips & Common Mistakes</h2>
+
+          <div class="success-box">
+            <h4>✅ DO's:</h4>
+            <ul>
+              <li>
+                Calculate distances to ALL centroids before making assignments
+              </li>
+              <li>
+                Show distance calculations clearly with formula substitution
+              </li>
+              <li>
+                Round intermediate calculations to 2 decimal places for clarity
+              </li>
+              <li>Create a table for cluster assignments in each iteration</li>
+              <li>Verify convergence by comparing cluster assignments</li>
+              <li>Recalculate centroids using mean of all points in cluster</li>
+              <li>Label iterations clearly (Iteration 1, Iteration 2, etc.)</li>
+            </ul>
+          </div>
+
+          <div class="warning-box">
+            <h4>❌ DON'Ts / Common Mistakes:</h4>
+            <ul>
+              <li>Don't forget to calculate distance to BOTH/ALL centroids</li>
+              <li>Don't assign points before calculating all distances</li>
+              <li>Don't confuse x and y coordinates in distance formula</li>
+              <li>Don't forget to take square root in Euclidean distance</li>
+              <li>Don't stop after just one iteration (unless specified)</li>
+              <li>Don't use old centroids for next iteration calculations</li>
+              <li>
+                Don't round too early - maintain precision in calculations
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h4>🎯 Quick Convergence Check:</h4>
+            <p>Algorithm converges when ANY of these conditions is met:</p>
+            <ol>
+              <li>
+                <strong>Cluster assignments don't change</strong> between
+                iterations
+              </li>
+              <li>
+                <strong>Centroids don't change</strong> (or change is below
+                threshold like 0.01)
+              </li>
+              <li>
+                <strong>Maximum iterations reached</strong> (if specified in
+                problem)
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- SECTION 7: PRACTICE CHECKLIST -->
+        <div class="section">
+          <h2>7. Exam Problem-Solving Checklist</h2>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Read problem carefully:</strong> Identify K value, initial
+            centroids, number of data points
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Set up iteration 1:</strong> Write down initial centroids
+            clearly
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Calculate all distances:</strong> For each point, calculate
+            distance to each centroid
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Assign to clusters:</strong> Choose minimum distance, create
+            assignment table
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Update centroids:</strong> Calculate mean of x-coordinates
+            and y-coordinates separately
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Check convergence:</strong> Compare with previous iteration
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Repeat if needed:</strong> Start next iteration with new
+            centroids
+          </div>
+
+          <div class="step">
+            <span class="step-number">✓</span>
+            <strong>Write final answer:</strong> State final clusters and
+            centroids clearly
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
